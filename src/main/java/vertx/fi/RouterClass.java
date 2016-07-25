@@ -44,6 +44,8 @@ public class RouterClass {
             HashMap<String, String> hmap = new HashMap<String, String>();
 
             String AssociateTag = System.getenv("ASSOCIATE_TAG");
+            System.out.println(AssociateTag);
+            
             hmap.put("AssociateTag", AssociateTag);
 
             String Operation = "ItemLookup";
