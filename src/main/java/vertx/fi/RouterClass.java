@@ -5,6 +5,9 @@ import io.vertx.core.json.Json;
 import io.vertx.ext.web.FileUpload;
 import io.vertx.ext.web.RoutingContext;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 /**
@@ -22,7 +25,7 @@ public class RouterClass {
     }
 
     /**
-     * Login method responding to the post action.
+     * amazon method
      *
      * @param routingContext receives routing context from vertx.
      */
@@ -34,7 +37,45 @@ public class RouterClass {
          */
 
         HashMap<String, String> response = new HashMap<>();
-        response.put("error", "no data");
+        String url = null;
+
+        try {
+            SignedRequestsHelper encrpt = new SignedRequestsHelper();
+            HashMap<String, String> hmap = new HashMap<String, String>();
+
+            String AssociateTag = System.getenv("ASSOCIATE_TAG");
+            hmap.put("AssociateTag", AssociateTag);
+
+            String Operation = "ItemLookup";
+
+            hmap.put("Operation", Operation);
+
+            String Service = "AWSECommerceService";
+
+            hmap.put("Service", Service);
+
+            String ItemId = "0679722769";
+
+            hmap.put("ItemId", ItemId);
+
+            String ResponseGroup = "Images,ItemAttributes,Offers,Reviews";
+
+            hmap.put("ResponseGroup", ResponseGroup);
+
+            String Version = "2013-08-01";
+
+            hmap.put("Version", Version);
+
+            url = encrpt.sign(hmap);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+
+        response.put("url", url);
         /*
         User user = new User(request.getParam("username"),
                 request.getParam("password"));
