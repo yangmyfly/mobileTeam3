@@ -107,8 +107,10 @@ public class SignedRequestsHelper {
 
         while (iter.hasNext()) {
             Map.Entry<String, String> kvpair = iter.next();
+            System.out.println(kvpair.getKey());
             buffer.append(percentEncodeRfc3986(kvpair.getKey()));
             buffer.append("=");
+            System.out.println(kvpair.getValue());
             buffer.append(percentEncodeRfc3986(kvpair.getValue()));
             if (iter.hasNext()) {
                 buffer.append("&");
