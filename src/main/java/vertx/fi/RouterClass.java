@@ -78,13 +78,13 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            String Sort = "reviewrank";
+            String Sort = "relevancerank";
 
             hmap.put("Sort", Sort);
 
-            String ItemPage = "1";
+            //String ItemPage = "1";
 
-            hmap.put("ItemPage", ItemPage);
+            //hmap.put("ItemPage", ItemPage);
 
             //String Version = "2015-08-01";
 
