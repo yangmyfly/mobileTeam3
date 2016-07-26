@@ -135,59 +135,70 @@ public class RouterClass {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
 
-                    System.out.println("ASIN : "
-                            + eElement
+                    String ASIN, title, image, price, Product_description, customerReviews;
+
+                    ASIN = eElement
                             .getElementsByTagName("ASIN")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
 
-                    System.out.println("Title : "
-                            + ((Element) eElement
+                    System.out.println("ASIN : "
+                            + ASIN);
+
+                    title = ((Element) eElement
                             .getElementsByTagName("ItemAttributes")
                             .item(0))
                             .getElementsByTagName("Title")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
 
-                    System.out.println("MediumImage : "
-                            + ((Element) eElement
+                    System.out.println("Title : "
+                            + title);
+
+                    image = ((Element) eElement
                             .getElementsByTagName("MediumImage")
                             .item(0))
                             .getElementsByTagName("URL")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
 
-                    System.out.println("price : "
-                            +  ((Element) ((Element) eElement
+                    System.out.println("MediumImage : "
+                            + image);
+
+                    price = ((Element) ((Element) eElement
                             .getElementsByTagName("ItemAttributes")
                             .item(0))
                             .getElementsByTagName("ListPrice")
                             .item(0))
                             .getElementsByTagName("FormattedPrice")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
 
+                    System.out.println("price : "
+                            +  price);
 
-                    System.out.println("Product Description : "
-                            +  ((Element) ((Element) eElement
+                    Product_description = ((Element) ((Element) eElement
                             .getElementsByTagName("EditorialReviews")
                             .item(0))
                             .getElementsByTagName("EditorialReview")
                             .item(0))
                             .getElementsByTagName("Content")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
 
-                    System.out.println("CustomerReviews : "
-                            + ((Element) eElement
+                    System.out.println("Product Description : "
+                            +  Product_description);
+
+                    customerReviews = ((Element) eElement
                             .getElementsByTagName("CustomerReviews")
                             .item(0))
                             .getElementsByTagName("IFrameURL")
                             .item(0)
-                            .getTextContent());
+                            .getTextContent();
+                    System.out.println("CustomerReviews : "
+                            + customerReviews);
 
-
-
+                    searchList.add(new Products(0,0,title, ASIN, price, image, Product_description, customerReviews));
 
                 }
             }
