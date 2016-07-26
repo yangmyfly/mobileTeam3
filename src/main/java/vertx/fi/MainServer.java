@@ -36,6 +36,10 @@ final class MainServer {
         // request.
         Router router = Router.router(Vertx.vertx());
 
+        BodyHandler bodyHandler = BodyHandler.create();
+        bodyHandler.setUploadsDirectory("faults");
+        router.route().handler(bodyHandler);
+
         router.route("/test").blockingHandler(routingContext -> {
             HttpServerResponse response = routingContext.response();
             response.putHeader("content-type", "text/plain");
