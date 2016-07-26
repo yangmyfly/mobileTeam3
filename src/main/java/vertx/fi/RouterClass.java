@@ -104,7 +104,7 @@ public class RouterClass {
         }
 
         try {
-            System.out.println("url" + url);
+            System.out.println("url " + url);
             rawString = URLHandler(url);
 
             DocumentBuilderFactory dbFactory
@@ -134,11 +134,12 @@ public class RouterClass {
                         + nNode.getNodeName());
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    System.out.println("ASIN : "
-                            + eElement.getAttribute("ASIN"));
 
-                    System.out.println("MediumImage : "
-                            + eElement.getAttribute("MediumImage"));
+                    System.out.println("ASIN : "
+                            + eElement
+                            .getElementsByTagName("ASIN")
+                            .item(0)
+                            .getTextContent());
 
                     /*
                     System.out.println("MediumImage : "
