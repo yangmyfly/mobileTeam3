@@ -325,10 +325,16 @@ public class RouterClass {
 
                 if (i == 0) {
                     response.put("idA", rs.getString("beacon_id"));
+                    response.put("xA", String.valueOf(rs.getDouble("x")));
+                    response.put("yA", String.valueOf(rs.getDouble("y")));
                 } else if (i == 1) {
                     response.put("idB", rs.getString("beacon_id"));
+                    response.put("xB", String.valueOf(rs.getDouble("x")));
+                    response.put("yB", String.valueOf(rs.getDouble("y")));
                 } else if (i == 2) {
                     response.put("idC", rs.getString("beacon_id"));
+                    response.put("xC", String.valueOf(rs.getDouble("x")));
+                    response.put("yC", String.valueOf(rs.getDouble("y")));
                 } else {
                     System.out.println("no use id");
                     break;
