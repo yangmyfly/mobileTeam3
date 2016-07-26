@@ -5,7 +5,12 @@ import io.vertx.core.json.Json;
 import io.vertx.ext.web.FileUpload;
 import io.vertx.ext.web.RoutingContext;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -47,7 +52,7 @@ public class RouterClass {
          */
 
         HashMap<String, String> response = new HashMap<>();
-        String url = null;
+        String url = null, rawString = null;
 
         try {
             SignedRequestsHelper encrpt = new SignedRequestsHelper();
@@ -66,11 +71,11 @@ public class RouterClass {
             hmap.put("Service", Service);
 
 
-            String Keywords = "the hunger games";
+            String Keywords = request.getParam("Keywords");
 
             hmap.put("Keywords", Keywords);
 
-            String SearchIndex = "Books";
+            String SearchIndex = request.getParam("SearchIndex");;
 
             hmap.put("SearchIndex", SearchIndex);
 
@@ -82,14 +87,6 @@ public class RouterClass {
 
             hmap.put("Sort", Sort);
 
-            //String ItemPage = "1";
-
-            //hmap.put("ItemPage", ItemPage);
-
-            //String Version = "2015-08-01";
-
-            //hmap.put("Version", Version);
-
             url = encrpt.sign(hmap);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -99,22 +96,16 @@ public class RouterClass {
             e.printStackTrace();
         }
 
-        response.put("url", url);
-        /*
-        User user = new User(request.getParam("username"),
-                request.getParam("password"));
-        boolean validUser = user.isValidUser(User.getFileName());
-        HashMap<String, String> response = new HashMap<>();
-        int responseCode;
-        if (validUser) {
-            response.put("Token", user.getApiToken());
-            responseCode = SUCCESS;
-        } else {
-            response.put("error", "Invalid combination of username and "
-                    + "password.");
-            responseCode = ERROR;
+        //response.put("url", url);
+        try {
+            rawString = URLHandler(url);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        */
+
+        response.put("raw", rawString);
+
         returnResponse(routingContext, 200, response);
         return;
     }
@@ -382,6 +373,33 @@ public class RouterClass {
 
         return new Pointer(x,y);
     }
+
+
+    private static String URLHandler(String string) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            String string2;
+            String encoding="UTF-8";//utf8
+            URL uRL = new URL(string);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) uRL
+                    .openConnection();
+            if (httpURLConnection.getResponseCode() != 200) {
+                throw new IOException(httpURLConnection.getResponseMessage());
+            }
+            // use buffer to read the response
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream(), encoding));
+            while ((string2 = bufferedReader.readLine()) != null) {
+                stringBuilder.append(string2 + "\n");
+            }
+            bufferedReader.close();
+            httpURLConnection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
 
 
 }
