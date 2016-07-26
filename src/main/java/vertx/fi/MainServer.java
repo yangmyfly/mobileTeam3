@@ -56,6 +56,8 @@ final class MainServer {
 
         router.get("/searchProducts").blockingHandler(RouterClass::searchProducts, false);
 
+        router.get("/getProductLoc").blockingHandler(RouterClass::getProductLoc, false);
+
 
         Vertx.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(PORT);

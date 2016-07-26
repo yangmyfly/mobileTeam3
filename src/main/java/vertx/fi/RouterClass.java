@@ -351,6 +351,59 @@ public class RouterClass {
 
 
     /**
+     * getProductLoc by ASIN
+     *
+     * @param routingContext receives routing context from vertx.
+     */
+    static void getProductLoc(final RoutingContext routingContext) {
+        HttpServerRequest request = routingContext.request();
+
+        /**
+         * use hash map or a class object for response, and u can also use arraylist store some object.
+         */
+        HashMap<String, String> response = new HashMap<>();
+
+        String ASIN = request.getParam("ASIN");
+
+        double x = -1;
+        double y = -1;
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(url, userr, pass);
+            Statement stmt = con.createStatement();
+
+
+
+            String sql="select * from products where ASIN = " + ASIN;
+
+            ResultSet rs=stmt.executeQuery(sql);
+            while(rs.next()) {
+
+                x = rs.getDouble("x");
+                x = rs.getDouble("y");
+                break;
+            }
+
+
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        response.put("x", String.valueOf(x));
+
+        response.put("y", String.valueOf(y));
+
+        returnResponse(routingContext, 200, response);
+        return;
+    }
+
+
+    /**
      * navigation method
      *
      * @param routingContext receives routing context from vertx.
