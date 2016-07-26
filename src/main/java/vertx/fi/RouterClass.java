@@ -382,7 +382,7 @@ public class RouterClass {
             while(rs.next()) {
 
                 x = rs.getDouble("x");
-                x = rs.getDouble("y");
+                y = rs.getDouble("y");
                 break;
             }
 
