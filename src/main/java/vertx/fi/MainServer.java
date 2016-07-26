@@ -46,6 +46,10 @@ final class MainServer {
 
         router.get("/amazonsProduct").blockingHandler(RouterClass::amazonsProduct, false);
 
+        router.get("/beaconList").blockingHandler(RouterClass::beaconList, false);
+
+        router.post("/navigation").blockingHandler(RouterClass::navigation, false);
+
 
         Vertx.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(PORT);
