@@ -8,14 +8,14 @@ public class Products {
     public double y;
     public String title;
     public String ASIN;
-    public double price;
+    public String price;
 
 
     public String image;
     public String description;
     public String customReview;
 
-    public Products(double x, double y, String title, String ASIN, double price,
+    public Products(double x, double y, String title, String ASIN, String price,
                     String image, String description, String customReview) {
         this.x = x;
         this.y = y;

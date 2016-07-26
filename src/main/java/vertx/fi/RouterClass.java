@@ -141,6 +141,14 @@ public class RouterClass {
                             .item(0)
                             .getTextContent());
 
+                    System.out.println("Title : "
+                            + ((Element) eElement
+                            .getElementsByTagName("ItemAttributes")
+                            .item(0))
+                            .getElementsByTagName("Title")
+                            .item(0)
+                            .getTextContent());
+
                     System.out.println("MediumImage : "
                             + ((Element) eElement
                             .getElementsByTagName("MediumImage")
@@ -149,15 +157,17 @@ public class RouterClass {
                             .item(0)
                             .getTextContent());
 
-
-                    /*
-                    System.out.println("MediumImage : "
-                            + eElement
-                            .getElementsByTagName("MediumImage")
+                    System.out.println("price : "
+                            +  ((Element) ((Element) eElement
+                            .getElementsByTagName("ItemAttributes")
+                            .item(0))
+                            .getElementsByTagName("ListPrice")
+                            .item(0))
+                            .getElementsByTagName("FormattedPrice")
                             .item(0)
                             .getTextContent());
 
-                            */
+
                 }
             }
 
