@@ -180,6 +180,8 @@ public class RouterClass {
 
         double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))/10.0;
 
+        System.out.println("distanceA" + String.valueOf(distanceA));
+
 
         String rssiB = request.getParam("rssiB");
 
@@ -187,12 +189,17 @@ public class RouterClass {
 
         double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))/10.0;
 
+        System.out.println("distanceB" + String.valueOf(distanceB));
+
+
 
         String rssiC = request.getParam("rssiC");
 
         String txPowerC = request.getParam("txPowerC");
 
         double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))/10.0;
+
+        System.out.println("distanceC" + String.valueOf(distanceC));
 
         Pointer xy = getPointer(distanceA, distanceB, distanceC);
 
@@ -252,15 +259,15 @@ public class RouterClass {
                 if (i == 0) {
                     a = new Pointer(tempX, tempY);
                     System.out.println(rs.getString("beacon_id") + " "
-                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
+                            + String.valueOf(tempX) + " " + String.valueOf(tempY));
                 } else if (i == 1) {
                     b = new Pointer(tempX, tempY);
                     System.out.println(rs.getString("beacon_id") + " "
-                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
+                            + String.valueOf(tempX) + " " + String.valueOf(tempY));
                 } else if (i == 2) {
                     c = new Pointer(tempX, tempY);
                     System.out.println(rs.getString("beacon_id") + " "
-                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
+                            + String.valueOf(tempX) + " " + String.valueOf(tempY));
                 } else {
                     System.out.println("no use id");
                     break;
