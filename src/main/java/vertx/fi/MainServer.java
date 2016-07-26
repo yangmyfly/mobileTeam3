@@ -54,6 +54,8 @@ final class MainServer {
 
         router.post("/navigation").blockingHandler(RouterClass::navigation, false);
 
+        router.get("/searchProducts").blockingHandler(RouterClass::searchProducts, false);
+
 
         Vertx.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(PORT);

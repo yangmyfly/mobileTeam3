@@ -33,6 +33,85 @@ public class RouterClass {
         throw new AssertionError("Instantiating utility class.");
     }
 
+
+    /**
+     * amazon search method
+     *
+     * @param routingContext receives routing context from vertx.
+     */
+    static void searchProducts(final RoutingContext routingContext) {
+        HttpServerRequest request = routingContext.request();
+
+        /**
+         * use hash map or a class object for response, and u can also use arraylist store some object.
+         */
+
+        HashMap<String, String> response = new HashMap<>();
+        String url = null;
+
+        try {
+            SignedRequestsHelper encrpt = new SignedRequestsHelper();
+            HashMap<String, String> hmap = new HashMap<String, String>();
+
+            String AssociateTag = System.getenv("ASSOCIATE_TAG");
+
+            hmap.put("AssociateTag", AssociateTag);
+
+            String Operation = "ItemSearch";
+
+            hmap.put("Operation", Operation);
+
+            String Service = "AWSECommerceService";
+
+            hmap.put("Service", Service);
+
+
+            String Keywords = "the hunger games";
+
+            hmap.put("Keywords", Keywords);
+
+            String SearchIndex = "Books";
+
+            hmap.put("SearchIndex", SearchIndex);
+
+            String ResponseGroup = "Images,ItemAttributes,Accessories, EditorialReview, Reviews";
+
+            hmap.put("ResponseGroup", ResponseGroup);
+
+            //String Version = "2015-08-01";
+
+            //hmap.put("Version", Version);
+
+            url = encrpt.sign(hmap);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+
+        response.put("url", url);
+        /*
+        User user = new User(request.getParam("username"),
+                request.getParam("password"));
+        boolean validUser = user.isValidUser(User.getFileName());
+        HashMap<String, String> response = new HashMap<>();
+        int responseCode;
+        if (validUser) {
+            response.put("Token", user.getApiToken());
+            responseCode = SUCCESS;
+        } else {
+            response.put("error", "Invalid combination of username and "
+                    + "password.");
+            responseCode = ERROR;
+        }
+        */
+        returnResponse(routingContext, 200, response);
+        return;
+    }
+
+
     /**
      * amazon method
      *
