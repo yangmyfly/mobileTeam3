@@ -44,8 +44,7 @@ public class RouterClass {
             HashMap<String, String> hmap = new HashMap<String, String>();
 
             String AssociateTag = System.getenv("ASSOCIATE_TAG");
-            System.out.println(AssociateTag);
-            
+
             hmap.put("AssociateTag", AssociateTag);
 
             String Operation = "ItemLookup";
@@ -60,7 +59,7 @@ public class RouterClass {
 
             hmap.put("ItemId", ItemId);
 
-            String ResponseGroup = "Images,ItemAttributes,Offers,Reviews";
+            String ResponseGroup = "Images,ItemAttributes,Accessories, EditorialReview, Reviews";
 
             hmap.put("ResponseGroup", ResponseGroup);
 
