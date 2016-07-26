@@ -104,6 +104,7 @@ public class RouterClass {
         }
 
         try {
+            System.out.println("url" + url);
             rawString = URLHandler(url);
 
             DocumentBuilderFactory dbFactory
