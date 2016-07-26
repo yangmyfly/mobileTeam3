@@ -37,7 +37,7 @@ final class MainServer {
         Router router = Router.router(Vertx.vertx());
 
         BodyHandler bodyHandler = BodyHandler.create();
-        bodyHandler.setUploadsDirectory("faults");
+        //bodyHandler.setUploadsDirectory("faults");
         router.route().handler(bodyHandler);
 
         router.route("/test").blockingHandler(routingContext -> {
