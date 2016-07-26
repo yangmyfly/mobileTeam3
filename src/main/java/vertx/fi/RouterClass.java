@@ -72,7 +72,7 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            String Version = "2013-08-01";
+            String Version = "2015-08-01";
 
             hmap.put("Version", Version);
 
@@ -180,7 +180,7 @@ public class RouterClass {
 
         double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))/10.0;
 
-        System.out.println("distanceA" + String.valueOf(distanceA));
+        System.out.println("distanceA " + String.valueOf(distanceA));
 
 
         String rssiB = request.getParam("rssiB");
@@ -189,7 +189,7 @@ public class RouterClass {
 
         double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))/10.0;
 
-        System.out.println("distanceB" + String.valueOf(distanceB));
+        System.out.println("distanceB " + String.valueOf(distanceB));
 
 
 
@@ -199,7 +199,7 @@ public class RouterClass {
 
         double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))/10.0;
 
-        System.out.println("distanceC" + String.valueOf(distanceC));
+        System.out.println("distanceC " + String.valueOf(distanceC));
 
         Pointer xy = getPointer(distanceA, distanceB, distanceC);
 
