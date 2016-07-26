@@ -8,18 +8,20 @@ public class Products {
     public double y;
     public String title;
     public String ASIN;
+    public double price;
 
 
     public String image;
     public String description;
     public String customReview;
 
-    public Products(double x, double y, String title, String ASIN,
+    public Products(double x, double y, String title, String ASIN, double price,
                     String image, String description, String customReview) {
         this.x = x;
         this.y = y;
         this.title = title;
         this.ASIN = ASIN;
+        this.price = price;
         this.image = image;
         this.description = description;
         this.customReview = customReview;

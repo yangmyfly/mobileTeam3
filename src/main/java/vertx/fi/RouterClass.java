@@ -17,7 +17,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
+import java.util.List;
 
 /**
  * Created by joe on 16/7/24.
@@ -51,8 +57,9 @@ public class RouterClass {
          * use hash map or a class object for response, and u can also use arraylist store some object.
          */
 
-        HashMap<String, String> response = new HashMap<>();
         String url = null, rawString = null;
+
+        List<Products> searchList = new ArrayList<>();
 
         try {
             SignedRequestsHelper encrpt = new SignedRequestsHelper();
@@ -99,20 +106,68 @@ public class RouterClass {
         try {
             rawString = URLHandler(url);
 
-        } catch (IOException e) {
+            DocumentBuilderFactory dbFactory
+                    = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            StringBuilder xmlStringBuilder = new StringBuilder();
+
+            xmlStringBuilder.append(rawString);
+
+            ByteArrayInputStream input =  new ByteArrayInputStream(
+                    xmlStringBuilder.toString().getBytes("UTF-8"));
+            Document doc = dBuilder.parse(input);
+
+            doc.getDocumentElement().normalize();
+
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Item");
+
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+
+                System.out.println("\nCurrent Element :"
+                        + nNode.getNodeName());
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    System.out.println("ASIN : "
+                            + eElement.getAttribute("ASIN"));
+
+                    System.out.println("MediumImage : "
+                            + eElement.getAttribute("MediumImage"));
+
+                    /*
+                    System.out.println("MediumImage : "
+                            + eElement
+                            .getElementsByTagName("MediumImage")
+                            .item(0)
+                            .getTextContent());
+
+                            */
+                }
+            }
+
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        routingContext.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/xml; charset=utf-8")
-                .end(rawString);
+
+
+//        routingContext.response()
+//                .setStatusCode(200)
+//                .putHeader("content-type", "application/xml; charset=utf-8")
+//                .end(rawString);
+//        return;
+
+
+        returnResponse(routingContext, 200, searchList);
         return;
-
-
-        //returnResponse(routingContext, 200, response);
-        //return;
     }
 
 
