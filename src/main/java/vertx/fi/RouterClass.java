@@ -141,6 +141,15 @@ public class RouterClass {
                             .item(0)
                             .getTextContent());
 
+                    System.out.println("MediumImage : "
+                            + ((Element) eElement
+                            .getElementsByTagName("MediumImage")
+                            .item(0))
+                            .getElementsByTagName("URL")
+                            .item(0)
+                            .getTextContent());
+
+
                     /*
                     System.out.println("MediumImage : "
                             + eElement
