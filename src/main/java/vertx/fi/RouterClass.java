@@ -251,10 +251,16 @@ public class RouterClass {
 
                 if (i == 0) {
                     a = new Pointer(tempX, tempY);
+                    System.out.println(rs.getString("beacon_id") + " "
+                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
                 } else if (i == 1) {
                     b = new Pointer(tempX, tempY);
+                    System.out.println(rs.getString("beacon_id") + " "
+                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
                 } else if (i == 2) {
                     c = new Pointer(tempX, tempY);
+                    System.out.println(rs.getString("beacon_id") + " "
+                            + String.valueOf(tempX) + " " + String.valueOf(tempX));
                 } else {
                     System.out.println("no use id");
                     break;
