@@ -104,10 +104,17 @@ public class RouterClass {
             e.printStackTrace();
         }
 
-        response.put("raw", rawString);
+        //response.put("raw", rawString);
 
-        returnResponse(routingContext, 200, response);
+        routingContext.response()
+                .setStatusCode(200)
+                .putHeader("content-type", "text/plain")
+                .end(rawString);
         return;
+
+
+        //returnResponse(routingContext, 200, response);
+        //return;
     }
 
 
