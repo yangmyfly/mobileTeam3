@@ -177,6 +177,9 @@ public class RouterClass {
 
         String txPowerA = request.getParam("txPowerA");
 
+        System.out.println(rssiA);
+        System.out.println(txPowerA);
+
         double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))/10.0;
 
 
