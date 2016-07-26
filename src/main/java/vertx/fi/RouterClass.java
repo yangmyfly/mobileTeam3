@@ -96,7 +96,6 @@ public class RouterClass {
             e.printStackTrace();
         }
 
-        //response.put("url", url);
         try {
             rawString = URLHandler(url);
 
@@ -104,11 +103,10 @@ public class RouterClass {
             e.printStackTrace();
         }
 
-        //response.put("raw", rawString);
 
         routingContext.response()
                 .setStatusCode(200)
-                .putHeader("content-type", "text/plain")
+                .putHeader("content-type", "application/xml; charset=utf-8")
                 .end(rawString);
         return;
 
