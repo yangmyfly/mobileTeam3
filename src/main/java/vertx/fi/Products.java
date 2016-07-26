@@ -6,6 +6,7 @@ package vertx.fi;
 public class Products {
     public double x;
     public double y;
+
     public String title;
     public String ASIN;
     public String price;

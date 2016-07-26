@@ -168,6 +168,27 @@ public class RouterClass {
                             .getTextContent());
 
 
+                    System.out.println("Product Description : "
+                            +  ((Element) ((Element) eElement
+                            .getElementsByTagName("EditorialReviews")
+                            .item(0))
+                            .getElementsByTagName("EditorialReview")
+                            .item(0))
+                            .getElementsByTagName("Content")
+                            .item(0)
+                            .getTextContent());
+
+                    System.out.println("CustomerReviews : "
+                            + ((Element) eElement
+                            .getElementsByTagName("CustomerReviews")
+                            .item(0))
+                            .getElementsByTagName("IFrameURL")
+                            .item(0)
+                            .getTextContent());
+
+
+
+
                 }
             }
 
