@@ -135,7 +135,7 @@ public class RouterClass {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
 
-                    String ASIN, title, image, price, Product_description, customerReviews;
+                    String ASIN, title, image, price = "unknown", Product_description, customerReviews;
 
                     ASIN = eElement
                             .getElementsByTagName("ASIN")
@@ -165,14 +165,20 @@ public class RouterClass {
                     System.out.println("MediumImage : "
                             + image);
 
-                    price = ((Element) ((Element) eElement
+                    Node n1 = eElement
                             .getElementsByTagName("ItemAttributes")
-                            .item(0))
-                            .getElementsByTagName("ListPrice")
-                            .item(0))
-                            .getElementsByTagName("FormattedPrice")
-                            .item(0)
-                            .getTextContent();
+                            .item(0);
+
+                    if (n1 != null) {
+                        Element e1 = (Element) n1;
+                        Node n2 = e1.getElementsByTagName("ListPrice").item(0);
+
+                        if (n2 != null) {
+                            Element e2 = (Element) n2;
+                            price = e2.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+                        }
+                    }
+
 
                     System.out.println("price : "
                             +  price);
