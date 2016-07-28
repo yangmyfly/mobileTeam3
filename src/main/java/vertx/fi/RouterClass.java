@@ -285,7 +285,7 @@ public class RouterClass {
 
             hmap.put("Service", Service);
 
-            String ItemId = "0976925524";
+            String ItemId = request.getParam("ASIN");;
 
             hmap.put("ItemId", ItemId);
 
@@ -293,9 +293,9 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            String Version = "2015-08-01";
-
-            hmap.put("Version", Version);
+//            String Version = "2015-08-01";
+//
+//            hmap.put("Version", Version);
 
             url = encrpt.sign(hmap);
         } catch (UnsupportedEncodingException e) {
@@ -306,22 +306,145 @@ public class RouterClass {
             e.printStackTrace();
         }
 
-        response.put("url", url);
-        /*
-        User user = new User(request.getParam("username"),
-                request.getParam("password"));
-        boolean validUser = user.isValidUser(User.getFileName());
-        HashMap<String, String> response = new HashMap<>();
-        int responseCode;
-        if (validUser) {
-            response.put("Token", user.getApiToken());
-            responseCode = SUCCESS;
-        } else {
-            response.put("error", "Invalid combination of username and "
-                    + "password.");
-            responseCode = ERROR;
+        //response.put("url", url);
+
+        try {
+            System.out.println("url " + url);
+            String rawString = URLHandler(url);
+
+            DocumentBuilderFactory dbFactory
+                    = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            StringBuilder xmlStringBuilder = new StringBuilder();
+
+            xmlStringBuilder.append(rawString);
+
+            ByteArrayInputStream input =  new ByteArrayInputStream(
+                    xmlStringBuilder.toString().getBytes("UTF-8"));
+            Document doc = dBuilder.parse(input);
+
+            doc.getDocumentElement().normalize();
+
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Item");
+
+            Node nNode = nList.item(0);
+
+            System.out.println("\nCurrent Element :"
+                    + nNode.getNodeName());
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) nNode;
+
+                String ASIN, title = "unknown", image = "unknown", price = "unknown", Product_description = "unknown", customerReviews = "unknown";
+
+                ASIN = eElement
+                        .getElementsByTagName("ASIN")
+                        .item(0)
+                        .getTextContent();
+
+                System.out.println("ASIN : "
+                        + ASIN);
+
+
+                Node t1 = eElement
+                        .getElementsByTagName("ItemAttributes")
+                        .item(0);
+                if (t1 != null) {
+                    Element e1 = (Element) t1;
+                    title = e1.getElementsByTagName("Title")
+                            .item(0)
+                            .getTextContent();
+                }
+
+                System.out.println("Title : "
+                        + title);
+
+
+                Node m1 = eElement
+                        .getElementsByTagName("MediumImage")
+                        .item(0);
+
+                if (m1 != null) {
+                    Element e1 = (Element) m1;
+                    image = e1.getElementsByTagName("URL")
+                            .item(0)
+                            .getTextContent();
+                }
+
+                System.out.println("MediumImage : "
+                        + image);
+
+                Node n1 = eElement
+                        .getElementsByTagName("ItemAttributes")
+                        .item(0);
+
+                if (n1 != null) {
+                    Element e1 = (Element) n1;
+                    Node n2 = e1.getElementsByTagName("ListPrice").item(0);
+
+                    if (n2 != null) {
+                        Element e2 = (Element) n2;
+                        price = e2.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+                    }
+                }
+
+
+                System.out.println("price : "
+                        + price);
+
+
+                Node r1 = eElement
+                        .getElementsByTagName("EditorialReviews")
+                        .item(0);
+
+                if (r1 != null) {
+                    Element e1 = (Element) r1;
+                    Node r2 = e1.getElementsByTagName("EditorialReview").item(0);
+
+                    if (r2 != null) {
+                        Element e2 = (Element) r2;
+                        Product_description = e2.getElementsByTagName("Content")
+                                .item(0)
+                                .getTextContent();
+                    }
+                }
+
+                System.out.println("Product Description : "
+                        + Product_description);
+
+
+                Node c1 = eElement
+                        .getElementsByTagName("CustomerReviews")
+                        .item(0);
+
+                if (c1 != null) {
+                    Element e1 = (Element) c1;
+                    customerReviews = e1.getElementsByTagName("IFrameURL").item(0).getTextContent();
+
+                }
+
+                System.out.println("CustomerReviews : "
+                        + customerReviews);
+
+                //new Products(0,0,title, ASIN, price, image, Product_description, customerReviews);
+                response.put("x", "0");
+                response.put("y", "0");
+                response.put("title", title);
+                response.put("ASIN", ASIN);
+                response.put("price", price);
+                response.put("image", image);
+                response.put("description", Product_description);
+                response.put("customReview", customerReviews);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        */
+
         returnResponse(routingContext, 200, response);
         return;
     }
