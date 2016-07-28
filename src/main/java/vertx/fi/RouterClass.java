@@ -90,7 +90,7 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            if (SearchIndex.compareTo("All") != 0) {
+            if (SearchIndex.compareTo("All") != 0 && SearchIndex.compareTo("Blended") != 0) {
                 String Sort = "relevancerank";
 
                 hmap.put("Sort", Sort);
