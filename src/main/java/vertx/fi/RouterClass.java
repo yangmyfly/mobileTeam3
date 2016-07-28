@@ -415,6 +415,8 @@ public class RouterClass {
 
             String sql="select * from products where ASIN = " + ASIN;
 
+            System.out.println(sql);
+
             ResultSet rs=stmt.executeQuery(sql);
             while(rs.next()) {
 
