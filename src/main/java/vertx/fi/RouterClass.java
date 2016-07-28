@@ -137,7 +137,7 @@ public class RouterClass {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
 
-                    String ASIN, title = "unknown", image = null, price = "unknown", Product_description = "unknown", customerReviews = null;
+                    String ASIN, title = "unknown", image = "unknown", price = "unknown", Product_description = "unknown", customerReviews = "unknown";
 
                     ASIN = eElement
                             .getElementsByTagName("ASIN")
@@ -213,7 +213,7 @@ public class RouterClass {
 
                     System.out.println("Product Description : "
                             +  Product_description);
-                    
+
 
                     Node c1 = eElement
                             .getElementsByTagName("CustomerReviews")
