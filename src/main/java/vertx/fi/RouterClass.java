@@ -90,9 +90,11 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            String Sort = "relevancerank";
+            if (SearchIndex.compareTo("All") != 0) {
+                String Sort = "relevancerank";
 
-            hmap.put("Sort", Sort);
+                hmap.put("Sort", Sort);
+            }
 
             url = encrpt.sign(hmap);
         } catch (UnsupportedEncodingException e) {
