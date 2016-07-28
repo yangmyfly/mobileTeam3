@@ -403,6 +403,7 @@ public class RouterClass {
 
         double x = -1;
         double y = -1;
+        String price = "unknown";
 
 
         try {
@@ -419,6 +420,7 @@ public class RouterClass {
 
                 x = rs.getDouble("x");
                 y = rs.getDouble("y");
+                price = rs.getString("price");
                 break;
             }
 
@@ -433,6 +435,8 @@ public class RouterClass {
         response.put("x", String.valueOf(x));
 
         response.put("y", String.valueOf(y));
+
+        response.put("price", price);
 
         returnResponse(routingContext, 200, response);
         return;
