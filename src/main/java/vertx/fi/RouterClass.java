@@ -90,7 +90,7 @@ public class RouterClass {
 
             hmap.put("ResponseGroup", ResponseGroup);
 
-            if (SearchIndex.compareTo("All") != 0 && SearchIndex.compareTo("Blended") != 0) {
+            if (SearchIndex.compareTo("All") != 0 && SearchIndex.compareTo("Blended") != 0 && SearchIndex.compareTo("Electronics") != 0) {
                 String Sort = "relevancerank";
 
                 hmap.put("Sort", Sort);
@@ -137,7 +137,7 @@ public class RouterClass {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
 
-                    String ASIN, title, image, price = "unknown", Product_description, customerReviews;
+                    String ASIN, title = "unknown", image = null, price = "unknown", Product_description = "unknown", customerReviews = null;
 
                     ASIN = eElement
                             .getElementsByTagName("ASIN")
@@ -147,22 +147,31 @@ public class RouterClass {
                     System.out.println("ASIN : "
                             + ASIN);
 
-                    title = ((Element) eElement
+
+                    Node t1 = eElement
                             .getElementsByTagName("ItemAttributes")
-                            .item(0))
-                            .getElementsByTagName("Title")
-                            .item(0)
-                            .getTextContent();
+                            .item(0);
+                    if (t1 != null) {
+                        Element e1 = (Element) t1;
+                        title = e1.getElementsByTagName("Title")
+                                .item(0)
+                                .getTextContent();
+                    }
 
                     System.out.println("Title : "
                             + title);
 
-                    image = ((Element) eElement
+
+                    Node m1 = eElement
                             .getElementsByTagName("MediumImage")
-                            .item(0))
-                            .getElementsByTagName("URL")
-                            .item(0)
-                            .getTextContent();
+                            .item(0);
+
+                    if (m1 != null) {
+                        Element e1 = (Element) m1;
+                        image = e1.getElementsByTagName("URL")
+                                .item(0)
+                                .getTextContent();
+                    }
 
                     System.out.println("MediumImage : "
                             + image);
@@ -185,24 +194,37 @@ public class RouterClass {
                     System.out.println("price : "
                             +  price);
 
-                    Product_description = ((Element) ((Element) eElement
+
+                    Node r1 = eElement
                             .getElementsByTagName("EditorialReviews")
-                            .item(0))
-                            .getElementsByTagName("EditorialReview")
-                            .item(0))
-                            .getElementsByTagName("Content")
-                            .item(0)
-                            .getTextContent();
+                            .item(0);
+
+                    if (r1 != null) {
+                        Element e1 = (Element) r1;
+                        Node r2 = e1.getElementsByTagName("EditorialReview").item(0);
+
+                        if (r2 != null) {
+                            Element e2 = (Element) r2;
+                            Product_description = e2.getElementsByTagName("Content")
+                                    .item(0)
+                                    .getTextContent();
+                        }
+                    }
 
                     System.out.println("Product Description : "
                             +  Product_description);
+                    
 
-                    customerReviews = ((Element) eElement
+                    Node c1 = eElement
                             .getElementsByTagName("CustomerReviews")
-                            .item(0))
-                            .getElementsByTagName("IFrameURL")
-                            .item(0)
-                            .getTextContent();
+                            .item(0);
+
+                    if (c1 != null) {
+                        Element e1 = (Element) c1;
+                        customerReviews = e1.getElementsByTagName("IFrameURL").item(0).getTextContent();
+
+                    }
+
                     System.out.println("CustomerReviews : "
                             + customerReviews);
 
