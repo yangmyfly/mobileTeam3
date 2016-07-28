@@ -413,7 +413,7 @@ public class RouterClass {
 
 
 
-            String sql="select * from products where ASIN = " + ASIN;
+            String sql="select * from products where ASIN = \'" + ASIN + "\'";
 
             System.out.println(sql);
 
