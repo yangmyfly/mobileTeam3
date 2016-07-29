@@ -58,6 +58,8 @@ final class MainServer {
 
         router.get("/getProductLoc").blockingHandler(RouterClass::getProductLoc, false);
 
+        router.get("/commonPlace").blockingHandler(RouterClass::commonPlace, false);
+
 
         Vertx.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(PORT);

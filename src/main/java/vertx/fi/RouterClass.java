@@ -450,7 +450,7 @@ public class RouterClass {
     }
 
     /**
-     * navigation method
+     * beacon list method
      *
      * @param routingContext receives routing context from vertx.
      */
@@ -505,6 +505,48 @@ public class RouterClass {
 
 
         returnResponse(routingContext, 200, response);
+        return;
+    }
+
+    /**
+     * commonPlace method
+     *
+     * @param routingContext receives routing context from vertx.
+     */
+    static void commonPlace(final RoutingContext routingContext) {
+        HttpServerRequest request = routingContext.request();
+
+        /**
+         * use hash map or a class object for response, and u can also use arraylist store some object.
+         */
+
+        List<Places> commonPlaceList = new ArrayList<>();
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(url, userr, pass);
+            Statement stmt = con.createStatement();
+
+
+
+            String sql="select * from commonPlace";
+
+            ResultSet rs=stmt.executeQuery(sql);
+            while(rs.next()) {
+                commonPlaceList.add(new Places(String.valueOf(rs.getDouble("x")), String.valueOf(rs.getDouble("x")), rs.getString("x")));
+            }
+
+
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        returnResponse(routingContext, 200, commonPlaceList);
         return;
     }
 
