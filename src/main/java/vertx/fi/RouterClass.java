@@ -680,7 +680,7 @@ public class RouterClass {
 
     private static double getDistance(int rssi, int txPower) {
 
-        txPower = -74; // Manufacture set this power in the device
+        txPower = txPower-41; // Manufacture set this power in the device
         if (rssi == 0){
 
             return -1.0; // if we cannot determine accuracy, return -1.
