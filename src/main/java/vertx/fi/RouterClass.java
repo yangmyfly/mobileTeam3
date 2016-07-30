@@ -684,7 +684,7 @@ public class RouterClass {
             return -1.0; // if we cannot determine accuracy, return -1.
         }
 
-        double ratio = rssi*1.0/txPower;
+        double ratio = rssi*1.0/(txPower-41);
         if (ratio < 1.0) {
             return Math.pow(ratio,10) * 100;
         }
