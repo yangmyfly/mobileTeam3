@@ -629,7 +629,7 @@ public class RouterClass {
         String txPowerA = request.getParam("txPowerA");
 
 
-        double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))*10.0;
+        double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))/10.0;
 
         System.out.println("distanceA " + String.valueOf(distanceA));
 
@@ -638,7 +638,7 @@ public class RouterClass {
 
         String txPowerB = request.getParam("txPowerB");
 
-        double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))*10.0;
+        double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))/10.0;
 
         System.out.println("distanceB " + String.valueOf(distanceB));
 
@@ -648,7 +648,7 @@ public class RouterClass {
 
         String txPowerC = request.getParam("txPowerC");
 
-        double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))*10.0;
+        double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))/10.0;
 
         System.out.println("distanceC " + String.valueOf(distanceC));
 
@@ -679,19 +679,13 @@ public class RouterClass {
     }
 
     private static double getDistance(int rssi, int txPower) {
-
-        if (rssi == 0) {
-            return -1.0; // if we cannot determine accuracy, return -1.
-        }
-
-        double ratio = rssi*1.0/(txPower - 41);
-        if (ratio < 1.0) {
-            return Math.pow(ratio,10);
-        }
-        else {
-            double accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;
-            return accuracy;
-        }
+    /*
+     * RSSI = TxPower - 10 * n * lg(d)
+     * n = 2 (in free space)
+     *
+     * d = 10 ^ ((TxPower - RSSI) / (10 * n))
+     */
+        return Math.pow(10d, ((double) txPower - rssi) / (10 * 2));
     }
 
     private static Pointer getPointer(double dA, double dB, double dC) {
