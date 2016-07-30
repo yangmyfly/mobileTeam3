@@ -732,9 +732,9 @@ public class RouterClass {
             x = (W*(c.y-b.y) - Z*(b.y-a.y)) / (2 * ((b.x-a.x)*(c.y-b.y) - (c.x-b.x)*(b.y-a.y)));
             y = (W - 2*x*(b.x-a.x)) / (2*(b.y-a.y));
             //y2 is a second measure of y to mitigate errors
-            //double y2 = (Z - 2*x*(c.x-b.x)) / (2*(c.y-b.y));
+            double y2 = (Z - 2*x*(c.x-b.x)) / (2*(c.y-b.y));
 
-            //y = (y + y2) / 2;
+            y = (y + y2) / 2;
 
 
             rs.close();
