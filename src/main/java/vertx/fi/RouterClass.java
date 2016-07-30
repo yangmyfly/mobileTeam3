@@ -629,7 +629,7 @@ public class RouterClass {
         String txPowerA = request.getParam("txPowerA");
 
 
-        double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))/10.0;
+        double distanceA = getDistance(Integer.parseInt(rssiA), Integer.parseInt(txPowerA))*10.0;
 
         System.out.println("distanceA " + String.valueOf(distanceA));
 
@@ -638,7 +638,7 @@ public class RouterClass {
 
         String txPowerB = request.getParam("txPowerB");
 
-        double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))/10.0;
+        double distanceB = getDistance(Integer.parseInt(rssiB), Integer.parseInt(txPowerB))*10.0;
 
         System.out.println("distanceB " + String.valueOf(distanceB));
 
@@ -648,7 +648,7 @@ public class RouterClass {
 
         String txPowerC = request.getParam("txPowerC");
 
-        double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))/10.0;
+        double distanceC = getDistance(Integer.parseInt(rssiC), Integer.parseInt(txPowerC))*10.0;
 
         System.out.println("distanceC " + String.valueOf(distanceC));
 
