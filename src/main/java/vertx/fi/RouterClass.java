@@ -679,13 +679,23 @@ public class RouterClass {
     }
 
     private static double getDistance(int rssi, int txPower) {
-    /*
-     * RSSI = TxPower - 10 * n * lg(d)
-     * n = 2 (in free space)
-     *
-     * d = 10 ^ ((TxPower - RSSI) / (10 * n))
-     */
-        return Math.pow(10d, ((double) txPower - rssi) / (10 * 2));
+
+        txPower = -74; // Manufacture set this power in the device
+        if (rssi == 0){
+
+            return -1.0; // if we cannot determine accuracy, return -1.
+
+        }
+
+        double ratio = rssi*1.0 / txPower;
+        if (ratio < 1.0){
+            return Math.pow(ratio,10);
+
+        }
+        else{
+            double accuracy = (0.89976)*Math.pow(ratio,7.7095) + 0.111;
+            return accuracy;
+        }
     }
 
     private static Pointer getPointer(double dA, double dB, double dC) {
