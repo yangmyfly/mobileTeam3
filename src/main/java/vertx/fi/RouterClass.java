@@ -692,6 +692,29 @@ public class RouterClass {
 
         double x = 0, y = 0;
         Pointer a = new Pointer(0, 0),b = new Pointer(0, 0),c = new Pointer(0, 0);
+
+        //DECLARACAO DE VARIAVEIS
+        double[] P1   = new double[2];
+        double[] P2   = new double[2];
+        double[] P3   = new double[2];
+        double[] ex   = new double[2];
+        double[] ey   = new double[2];
+        double[] p3p1 = new double[2];
+        double jval  = 0;
+        double temp  = 0;
+        double ival  = 0;
+        double p3p1i = 0;
+        double triptx;
+        double xval;
+        double yval;
+        double t1;
+        double t2;
+        double t3;
+        double t;
+        double exx;
+        double d;
+        double eyy;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(url, userr, pass);
@@ -702,39 +725,101 @@ public class RouterClass {
             String sql="select * from beacon_list order by idbeacon_list";
 
             ResultSet rs=stmt.executeQuery(sql);
-            int i = 0;
+            int k = 0;
             while(rs.next()) {
                 double tempX = rs.getDouble("x");
                 double tempY = rs.getDouble("y");
 
-                if (i == 0) {
+                if (k == 0) {
                     a = new Pointer(tempX, tempY);
+                    P1[0] = a.x;
+                    P1[1] = a.y;
                     System.out.println(rs.getString("beacon_id") + " "
                             + String.valueOf(tempX) + " " + String.valueOf(tempY));
-                } else if (i == 1) {
+                } else if (k == 1) {
                     b = new Pointer(tempX, tempY);
+                    P2[0] = b.x;
+                    P2[1] = b.y;
                     System.out.println(rs.getString("beacon_id") + " "
                             + String.valueOf(tempX) + " " + String.valueOf(tempY));
-                } else if (i == 2) {
+                } else if (k == 2) {
                     c = new Pointer(tempX, tempY);
+                    P3[0] = c.x;
+                    P3[1] = c.y;
                     System.out.println(rs.getString("beacon_id") + " "
                             + String.valueOf(tempX) + " " + String.valueOf(tempY));
                 } else {
                     System.out.println("no use id");
                     break;
                 }
-                i++;
+                k++;
             }
 
-            double W = dA*dA - dB*dB - a.x*a.x - a.y*a.y + b.x*b.x + b.y*b.y;
-            double Z = dB*dB - dC*dC - b.x*b.x - b.y*b.y + c.x*c.x + c.y*c.y;
 
-            x = (W*(c.y-b.y) - Z*(b.y-a.y)) / (2 * ((b.x-a.x)*(c.y-b.y) - (c.x-b.x)*(b.y-a.y)));
-            y = (W - 2*x*(b.x-a.x)) / (2*(b.y-a.y));
-            //y2 is a second measure of y to mitigate errors
-            double y2 = (Z - 2*x*(c.x-b.x)) / (2*(c.y-b.y));
+            //TRANSFORMA O VALOR DE METROS PARA A UNIDADE DO MAPA
+            //DISTANCIA ENTRE O PONTO 1 E A MINHA LOCALIZACAO
+            dA = (dA / 100000);
+            //DISTANCIA ENTRE O PONTO 2 E A MINHA LOCALIZACAO
+            dB = (dB / 100000);
+            //DISTANCIA ENTRE O PONTO 3 E A MINHA LOCALIZACAO
+            dC = (dC / 100000);
 
-            y = (y + y2) / 2;
+            for (int i = 0; i < P1.length; i++) {
+                t1   = P2[i];
+                t2   = P1[i];
+                t    = t1 - t2;
+                temp += (t*t);
+            }
+            d = Math.sqrt(temp);
+            for (int i = 0; i < P1.length; i++) {
+                t1    = P2[i];
+                t2    = P1[i];
+                exx   = (t1 - t2)/(Math.sqrt(temp));
+                ex[i] = exx;
+            }
+            for (int i = 0; i < P3.length; i++) {
+                t1      = P3[i];
+                t2      = P1[i];
+                t3      = t1 - t2;
+                p3p1[i] = t3;
+            }
+            for (int i = 0; i < ex.length; i++) {
+                t1 = ex[i];
+                t2 = p3p1[i];
+                ival += (t1*t2);
+            }
+            for (int  i = 0; i < P3.length; i++) {
+                t1 = P3[i];
+                t2 = P1[i];
+                t3 = ex[i] * ival;
+                t  = t1 - t2 -t3;
+                p3p1i += (t*t);
+            }
+            for (int i = 0; i < P3.length; i++) {
+                t1 = P3[i];
+                t2 = P1[i];
+                t3 = ex[i] * ival;
+                eyy = (t1 - t2 - t3)/Math.sqrt(p3p1i);
+                ey[i] = eyy;
+            }
+            for (int i = 0; i < ey.length; i++) {
+                t1 = ey[i];
+                t2 = p3p1[i];
+                jval += (t1*t2);
+            }
+            xval = (Math.pow(dA, 2) - Math.pow(dB, 2) + Math.pow(d, 2))/(2*d);
+            yval = ((Math.pow(dA, 2) - Math.pow(dC, 2) + Math.pow(ival, 2) + Math.pow(jval, 2))/(2*jval)) - ((ival/jval)*xval);
+
+            t1 = a.x;
+            t2 = ex[0] * xval;
+            t3 = ey[0] * yval;
+            triptx = t1 + t2 + t3;
+            x = triptx;
+            t1 = a.y;
+            t2 = ex[1] * xval;
+            t3 = ey[1] * yval;
+            triptx = t1 + t2 + t3;
+            y = triptx;
 
 
             rs.close();
