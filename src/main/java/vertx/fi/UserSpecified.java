@@ -95,6 +95,9 @@ public class UserSpecified {
                 stmt.close();
                 con.close();
 
+                returnResponse(routingContext, 200, response);
+                return;
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -114,6 +117,9 @@ public class UserSpecified {
                 stmt.close();
                 con.close();
 
+                returnResponse(routingContext, 200, response);
+                return;
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -131,6 +137,9 @@ public class UserSpecified {
 
                 stmt.close();
                 con.close();
+
+                returnResponse(routingContext, 200, response);
+                return;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -202,6 +211,9 @@ public class UserSpecified {
                 stmt.close();
                 con.close();
 
+                returnResponse(routingContext, 200, response);
+                return;
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -221,6 +233,9 @@ public class UserSpecified {
 
                 stmt.close();
                 con.close();
+
+                returnResponse(routingContext, 200, response);
+                return;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -279,6 +294,9 @@ public class UserSpecified {
 
             stmt.close();
             con.close();
+
+            returnResponse(routingContext, 200, response);
+            return;
 
         } catch (Exception e) {
             e.printStackTrace();
