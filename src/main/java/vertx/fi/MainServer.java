@@ -63,19 +63,19 @@ final class MainServer {
         // get all shopping lists
         router.get("/shoppingLists").blockingHandler(UserSpecified::shoppingLists, false);
         // add or update a shopping list
-        router.put("/editShoppingList").blockingHandler(UserSpecified::editShoppingList, false);
+        router.post("/editShoppingList").blockingHandler(UserSpecified::editShoppingList, false);
         // get all coupons
         router.get("/coupons").blockingHandler(UserSpecified::coupons, false);
         // add or remove a coupon
-        router.put("/editCoupon").blockingHandler(UserSpecified::editCoupon, false);
+        router.post("/editCoupon").blockingHandler(UserSpecified::editCoupon, false);
         // get user profile
         router.get("/profile").blockingHandler(UserSpecified::profile, false);
         // edit user profile (set membership card id, etc)
-        router.put("/editProfile").blockingHandler(UserSpecified::editProfile, false);
+        router.post("/editProfile").blockingHandler(UserSpecified::editProfile, false);
         // get recommended products based on Machine Learning algorithms
         router.get("/recommendations").blockingHandler(UserSpecified::recommendations, false);
         // add browsing history for the server to analyze data, e.g. train Machine Learning model
-        router.put("/history").blockingHandler(UserSpecified::history, false);
+        router.post("/history").blockingHandler(UserSpecified::history, false);
         
         Vertx.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(PORT);
