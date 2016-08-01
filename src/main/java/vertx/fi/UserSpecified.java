@@ -79,6 +79,12 @@ public class UserSpecified {
 
         String title = request.getParam("title");
         String imgurl = request.getParam("imgurl");
+
+        String description = request.getParam("description");
+
+        String customReview = request.getParam("customReview");
+
+        String price = request.getParam("price");
         
         if (op.equals("RM_LIST")) {
         	// delete the whole list
@@ -131,7 +137,7 @@ public class UserSpecified {
                 Connection con= DriverManager.getConnection(url, userr, pass);
                 Statement stmt = con.createStatement();
 
-                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl) VALUES (" + "\'" + shoppinglist_id + "\', \'" + user_id + "\', \'" +ASIN +  "\', \'" + title + "\', \'" + imgurl + "\')";
+                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl, price, description, customReview) VALUES (" + "\'" + shoppinglist_id + "\', \'" + user_id + "\', \'" +ASIN +  "\', \'" + title + "\', \'" + imgurl + "\', \'" + price + "\', \'" + description + "\', \'" + customReview + "\')";
 
                 stmt.executeUpdate(sql);
 
