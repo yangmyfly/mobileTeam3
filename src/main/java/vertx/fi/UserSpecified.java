@@ -185,7 +185,7 @@ public class UserSpecified {
 //            	sb.append("::");
 //            	sb.append(rs.getString("expire_date"));
 
-                searchList.add(new Coupon(rs.getString("coupon_id"), rs.getString("user_id"), rs.getString("description"), rs.getString("expire_date"));
+                searchList.add(new Coupon(rs.getString("coupon_id"), rs.getString("user_id"), rs.getString("description"), rs.getString("expire_date")));
                 i++;
             }
 
