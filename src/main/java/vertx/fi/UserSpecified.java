@@ -137,7 +137,7 @@ public class UserSpecified {
                 Connection con= DriverManager.getConnection(url, userr, pass);
                 Statement stmt = con.createStatement();
 
-                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl, price, description, customReview) VALUES (" + "\'" + shoppinglist_id + "\', \'" + user_id + "\', \'" +ASIN +  "\', \'" + title + "\', \'" + imgurl + "\', \'" + price + "\', \'" + description + "\', \'" + customReview + "\')";
+                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl, price, description, customReview) VALUES (" + "\"" + shoppinglist_id + "\", \"" + user_id + "\", \"" +ASIN +  "\", \"" + title + "\", \"" + imgurl + "\", \"" + price + "\", \"" + description + "\", \"" + customReview + "\")";
 
                 stmt.executeUpdate(sql);
 
