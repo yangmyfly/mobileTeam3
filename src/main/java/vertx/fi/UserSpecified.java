@@ -53,8 +53,8 @@ public class UserSpecified {
                 price = rs.getString("price");
                 Product_description = rs.getString("description");
 
-                customerReviews = rs.getString("customerReview");
-                
+                customerReviews = rs.getString("customReview");
+
 
                 searchList.add(new Products(0,0,title, ASIN, price, image, Product_description, customerReviews));
                 i++;
