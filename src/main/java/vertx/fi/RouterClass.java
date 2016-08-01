@@ -688,11 +688,11 @@ public class RouterClass {
 
         double ratio = rssi*1.0/(txPower-41);
         if (ratio < 1.0) {
-            return Math.pow(ratio,10);
+            return Math.pow(ratio,10) * 100;
         }
         else {
             double accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;
-            return accuracy;
+            return accuracy * 100;
         }
     }
 
