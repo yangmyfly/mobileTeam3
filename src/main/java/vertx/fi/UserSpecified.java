@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class UserSpecified {
         HashMap<String, String> response = new HashMap<>();
         
         String user_id = request.getParam("user_id");
+        List<Products> searchList = new ArrayList<>();
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -39,19 +41,22 @@ public class UserSpecified {
             String sql="select * from shopping_list where user_id = \'" + user_id + "\'";
 
             ResultSet rs=stmt.executeQuery(sql);
-           
+
+            //only one shopping list, but a lot of items for one person
             int i = 0;
             while(rs.next()) {
-            	StringBuilder sb = new StringBuilder();
-            	sb.append(rs.getString("shoppinglist_id"));
-            	sb.append("::");
-            	sb.append(rs.getString("ASIN"));
-            	sb.append("::");
-            	sb.append(rs.getString("title"));
-            	sb.append("::");
-            	sb.append(rs.getString("imgurl"));
-            	
-            	response.put(String.valueOf(i), sb.toString());
+
+                String ASIN = "unknown", title = "unknown", image = "unknown", price = "unknown", Product_description = "unknown", customerReviews = "unknown";
+                ASIN = rs.getString("ASIN");
+                title = rs.getString("title");
+                image = rs.getString("imgurl");
+                price = rs.getString("price");
+                Product_description = rs.getString("description");
+
+                customerReviews = rs.getString("customerReview");
+                
+
+                searchList.add(new Products(0,0,title, ASIN, price, image, Product_description, customerReviews));
                 i++;
             }
 
@@ -63,7 +68,7 @@ public class UserSpecified {
             e.printStackTrace();
         }
 
-        returnResponse(routingContext, 200, response);
+        returnResponse(routingContext, 200, searchList);
         return;
     }
 
