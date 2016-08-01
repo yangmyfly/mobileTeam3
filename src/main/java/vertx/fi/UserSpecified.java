@@ -164,6 +164,8 @@ public class UserSpecified {
         HashMap<String, String> response = new HashMap<>();
         
         String user_id = request.getParam("user_id");
+
+        List<Coupon> searchList = new ArrayList<>();
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -176,14 +178,14 @@ public class UserSpecified {
            
             int i = 0;
             while(rs.next()) {
-            	StringBuilder sb = new StringBuilder();
-            	sb.append(rs.getString("coupon_id"));
-            	sb.append("::");
-            	sb.append(rs.getString("description"));
-            	sb.append("::");
-            	sb.append(rs.getString("expire_date"));
-            	
-            	response.put(String.valueOf(i), sb.toString());
+//            	StringBuilder sb = new StringBuilder();
+//            	sb.append(rs.getString("coupon_id"));
+//            	sb.append("::");
+//            	sb.append(rs.getString("description"));
+//            	sb.append("::");
+//            	sb.append(rs.getString("expire_date"));
+
+                searchList.add(new Coupon(rs.getString("coupon_id"), rs.getString("user_id"), rs.getString("description"), rs.getString("expire_date"));
                 i++;
             }
 
@@ -194,7 +196,7 @@ public class UserSpecified {
             e.printStackTrace();
         }
 
-        returnResponse(routingContext, 200, response);
+        returnResponse(routingContext, 200, searchList);
         return;
 	}
 	
