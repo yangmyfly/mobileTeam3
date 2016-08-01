@@ -569,6 +569,7 @@ public class RouterClass {
         double x = -1;
         double y = -1;
         String price = "unknown";
+        String section = "C";
 
 
         try {
@@ -587,6 +588,8 @@ public class RouterClass {
 
                 x = rs.getDouble("x");
                 y = rs.getDouble("y");
+                section = rs.getString("section");
+
                 price = rs.getString("price");
                 break;
             }
@@ -602,6 +605,8 @@ public class RouterClass {
         response.put("x", String.valueOf(x));
 
         response.put("y", String.valueOf(y));
+
+        response.put("section", section);
 
         response.put("price", price);
 
