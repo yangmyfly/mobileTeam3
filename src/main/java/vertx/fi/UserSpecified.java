@@ -229,13 +229,28 @@ public class UserSpecified {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con= DriverManager.getConnection(url, userr, pass);
-                Statement stmt = con.createStatement();
+//                Statement stmt = con.createStatement();
 
-                String sql="INSERT INTO coupons (coupon_id, user_id, description, expire_date) VALUES (" + "\'" + coupon_id + "\', \'" + user_id + "\', \'" +description +  "\', \'" + expire_date + "\')";
+                String sql="INSERT INTO coupons (coupon_id, user_id, description, expire_date) VALUES (?, ?, ?, ?)";
 
-                stmt.executeUpdate(sql);
+                PreparedStatement updateemp = con.prepareStatement
+                        (sql);
 
-                stmt.close();
+                updateemp.setString(1,coupon_id);
+                updateemp.setString(2,user_id);
+                updateemp.setString(3, description);
+                updateemp.setString(4, expire_date);
+
+
+//                stmt.executeUpdate(sql);
+
+                updateemp.executeUpdate();
+
+                updateemp.close();
+
+//                stmt.executeUpdate(sql);
+//
+//                stmt.close();
                 con.close();
 
                 returnResponse(routingContext, 200, response);
