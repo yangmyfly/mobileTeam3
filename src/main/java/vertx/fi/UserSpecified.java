@@ -1,9 +1,6 @@
 package vertx.fi;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,13 +137,28 @@ public class UserSpecified {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con= DriverManager.getConnection(url, userr, pass);
-                Statement stmt = con.createStatement();
+//                Statement stmt = con.createStatement();
 
-                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl, price, description, customReview) VALUES (" + "\"" + shoppinglist_id + "\", \"" + user_id + "\", \"" +ASIN +  "\", \"" + title + "\", \"" + imgurl + "\", \"" + price + "\", \"" + description + "\", \"" + customReview + "\")";
+                String sql="INSERT INTO shopping_list (shoppinglist_id, user_id, ASIN, title, imgurl, price, description, customReview) VALUES (?,?,?,?,?,?,?,?)";
 
-                stmt.executeUpdate(sql);
+                PreparedStatement updateemp = con.prepareStatement
+                        (sql);
 
-                stmt.close();
+                updateemp.setString(1,user_id);
+                updateemp.setString(2,user_id);
+                updateemp.setString(3, ASIN);
+                updateemp.setString(4, title);
+                updateemp.setString(5, imgurl);
+                updateemp.setString(6, price);
+                updateemp.setString(7, description);
+                updateemp.setString(8, customReview);
+
+
+//                stmt.executeUpdate(sql);
+
+                updateemp.executeUpdate();
+
+                updateemp.close();
                 con.close();
 
                 returnResponse(routingContext, 200, response);
