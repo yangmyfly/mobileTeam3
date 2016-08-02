@@ -209,6 +209,8 @@ public class UserSpecified {
         String op = request.getParam("op");
         String description = request.getParam("description");
         String expire_date = request.getParam("expire_date");
+
+        System.out.println(expire_date);
         
         if (op.equals("add")) {
         	// add a coupon to the user
